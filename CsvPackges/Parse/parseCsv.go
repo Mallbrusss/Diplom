@@ -81,38 +81,3 @@ func ParseResult() ([]float64, []float64, error) {
 	return firstValues, secondValues, nil
 }
 
-// func ParseDate() ([]float64, error) {
-// 	file := opf.OpenCsvFile()
-// 	// Parse the CSV file into a slice of closing prices
-// 	reader := csv.NewReader(file)
-// 	reader.FieldsPerRecord = -1
-
-// 	var dates []float64
-// 	for {
-// 		record, err := reader.Read()
-// 		if err == io.EOF {
-// 			break
-// 		} else if err != nil {
-// 			fmt.Println("Error reading record:", err)
-// 			continue
-// 		}
-
-// 		dateStr := record[0]
-// 		date, err := time.Parse("01/02/2006", dateStr)
-// 		if err != nil {
-// 			return nil, fmt.Errorf("error parsing date: %w", err)
-// 		}
-// 		date = append(dates, float64(date.Unix()))
-// 		//fmt.Println("Date:", date)
-// 	}
-// 	return dates, nil
-// }
-
-// func ParseIndex()[]float64{
-// 	file := opf.OpenCsvFileResults()
-
-// 	reader := csv.NewReader(file)
-
-// 	reader.FieldsPerRecord = -1
-
-// }
