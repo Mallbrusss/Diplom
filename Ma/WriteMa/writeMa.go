@@ -17,7 +17,7 @@ func WriteMovingAvgToCsv(float64) error {
 	defer file.Close()
 	// Write the moving averages to the CSV file
 	writer := csv.NewWriter(file)
-	err = writer.Write([]string{fmt.Sprintf("%.2f", ma.MovingAverage()), fmt.Sprintf("%.2f", ma.MovingAverageSecond())})
+	err = writer.Write([]string{fmt.Sprintf("%.2f", ma.ShortMovingAverage()), fmt.Sprintf("%.2f", ma.LongMovingAverage())})
 	if err != nil {
 		return err
 	}

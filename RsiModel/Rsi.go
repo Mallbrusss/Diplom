@@ -4,28 +4,27 @@ import (
 	"fmt"
 	"math"
 
-	che "programm/ErrorsCheck"
 	prs "programm/CsvPackges/Parse"
+	err "programm/ErrorsCheck"
 )
 
-// TODO return float64 not []float64
-func rsi(prices []float64, period int) (float64) {
+func rsi(prices []float64, period int) float64 {
 	if len(prices) < period {
-		che.CheckError(nil)
+		err.CheckError(nil)
 	}
 
 	changes := make([]float64, len(prices)-1)
-	for i := 0; i < len(changes); i++ {
+	for i := range changes {
 		changes[i] = prices[i+1] - prices[i]
 	}
 
 	gains := make([]float64, len(changes))
 	losses := make([]float64, len(changes))
-	for i := 0; i < len(changes); i++ {
-		if changes[i] >= 0 {
-			gains[i] = changes[i]
+	for i, change := range changes {
+		if change >= 0 {
+			gains[i] = change
 		} else {
-			losses[i] = math.Abs(changes[i])
+			losses[i] = math.Abs(change)
 		}
 	}
 
@@ -42,7 +41,7 @@ func rsi(prices []float64, period int) (float64) {
 	} else {
 		rsi = 100 - (100 / (1 + rs))
 	}
-
+	fmt.Println("rsi is: ", rsi)
 	return rsi
 }
 
@@ -54,11 +53,8 @@ func average(numbers []float64) float64 {
 	return sum / float64(len(numbers))
 }
 
-
-func RsiMain()float64 {
-	prices :=  prs.ParseCSVFirst()
-	period := 14
-	rsi := rsi(prices, period)
-	fmt.Println("rsi is " , rsi)
-	return rsi
+func RsiMain() float64 {
+	prices := prs.ParseCSVFirst()
+	period := 10
+	return rsi(prices, period)
 }

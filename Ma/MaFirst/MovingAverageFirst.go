@@ -5,7 +5,7 @@ import (
 	prs "programm/CsvPackges/Parse"
 )
 
-func MovingAverage() float64 {
+func ShortMovingAverage() float64 {
 	// Extract the last ten closing prices from the slice
 	firstTen := prs.ParseCSVFirst()[:10]
 
@@ -23,7 +23,7 @@ func MovingAverage() float64 {
 	return movingAvg
 }
 
-func MovingAverageSecond() float64 {
+func LongMovingAverage() float64 {
 	// Extract the last ten closing prices from the slice
 	firstTwenty := prs.ParseCSVSecond()[:20]
 
