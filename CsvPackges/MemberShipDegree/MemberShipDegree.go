@@ -7,9 +7,9 @@ import (
 )
 
 const (
-	lowerBound  = 20
+	lowerBound  = 29
 	centerPoint = 30
-	upperBound  = 40
+	upperBound  = 35
 )
 
 func calculateMembershipDegree(maValue float64) float64 {

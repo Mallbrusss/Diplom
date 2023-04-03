@@ -16,7 +16,5 @@ func main() {
 		fmt.Println("Failed to write moving average to CSV:", err)
 	}	
 	 gr.Graphs()
-	// sig.MainSignal()
-	// sig.SignalWithMemberShipDegree()
 	sig.BetterSignal()
 }
