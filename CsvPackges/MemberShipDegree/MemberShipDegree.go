@@ -1,15 +1,15 @@
 package membersheipdegree
 
 import (
-	"fmt"
+	// "fmt"
 
 	ma "programm/Ma/MaFirst"
 )
 
 const (
-	lowerBound  = 29
+	lowerBound  = 15
 	centerPoint = 30
-	upperBound  = 35
+	upperBound  = 45
 )
 
 func calculateMembershipDegree(maValue float64) float64 {
@@ -25,18 +25,18 @@ func calculateMembershipDegree(maValue float64) float64 {
 func MembershipDegreeShort() float64 {
 	fastMA := ma.ShortMovingAverage()
 	mu := calculateMembershipDegree(fastMA)
-	fmt.Println("Membership degree short: ", mu)
+	// fmt.Println("Membership degree short: ", mu)
 	return mu
 }
 
 func MembershipDegreeLong() float64 {
 	longMA := ma.LongMovingAverage()
 	mu := calculateMembershipDegree(longMA)
-	fmt.Println("Membership degree long: ", mu)
+	// fmt.Println("Membership degree long: ", mu)
 	return mu
 }
 
 func Both() {
 	MembershipDegreeShort()
-	MembershipDegreeShort()
+	MembershipDegreeLong()
 }

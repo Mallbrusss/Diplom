@@ -2,52 +2,26 @@ package logicforsignal
 
 import (
 	"fmt"
-	// mu "programm/CsvPackges/MemberShipDegree"
+	mu "programm/CsvPackges/MemberShipDegree"
 	ma "programm/Ma/MaFirst"
 	rsi "programm/RsiModel"
 )
 
-// const (
-// 	oversoldThreshold   = 30
-// 	overboughtThreshold = 70
-// )
-
-// func determineMovingAverageSignal() string {
-// 	shortMA := ma.ShortMovingAverage()
-// 	longMA := ma.LongMovingAverage()
-// 	if shortMA > longMA {
-// 		return "buy"
-// 	} else if shortMA < longMA {
-// 		return "sell"
-// 	} else {
-// 		return "wait"
-// 	}
-// }
-
-// func rsiSignal() string {
-
-// 	currentRsi := rsi.RsiMain()
-
-// 	if currentRsi <= oversoldThreshold {
-// 		return "buy"
-// 	} else if currentRsi >= overboughtThreshold {
-// 		return "sell"
-// 	} else {
-// 		return "wait"
-// 	}
-
-// }
 
 func BetterSignal() string {
-	rsiValue := rsi.RsiMain()  // assume this function returns the current RSI value
+	rsiValue := rsi.RsiMain()          // assume this function returns the current RSI value
 	shortMA := ma.ShortMovingAverage() // assume this function returns the current short-term moving average
 	longMA := ma.LongMovingAverage()   // assume this function returns the current long-term moving average
 
 	rsiSignal := ""
 	if rsiValue >= 70 {
 		rsiSignal = "strong sell"
-	} else if rsiValue >= 30 && rsiValue < 70 {
+	} else if rsiValue >= 55 && rsiValue < 70 {
+		rsiSignal = "moderate sell"
+	} else if rsiValue >= 45 && rsiValue < 55 {
 		rsiSignal = "neutral"
+	} else if rsiValue >= 30 && rsiValue < 45 {
+		rsiSignal = "moderate buy"
 	} else {
 		rsiSignal = "strong buy"
 	}
@@ -65,30 +39,55 @@ func BetterSignal() string {
 	}
 
 	switch {
+	// for strong sell
+
 	case rsiSignal == "strong sell" && maSignal == "strong sell":
-		fmt.Println("sell")
+
 		return "sell"
-	case rsiSignal == "strong buy" && maSignal == "strong buy":
-		fmt.Println("buy")
-		return "buy"
+
+	case rsiSignal == "strong sell" && maSignal == "moderate sell":
+
+		return "moderate sell"
+
 	case rsiSignal == "strong sell" && maSignal == "moderate buy":
-		fmt.Println("moderate sell")
+
 		return "moderate sell"
+
+		// for moderate sell
 	case rsiSignal == "moderate sell" && (maSignal == "strong buy" || maSignal == "moderated buy"):
-		fmt.Println("moderate sell")
+
+		return "moderate buy"
+
+	case rsiSignal == "moderate sell" && (maSignal == "moderate sell" || maSignal == "strong sell"):
+
 		return "moderate sell"
+
+		// for strong buy
+
+	case rsiSignal == "strong buy" && maSignal == "strong buy":
+
+		return "buy"
+
 	case rsiSignal == "strong buy" && maSignal == "moderate sell":
-		fmt.Println("moderate buy")
+
 		return "moderate buy"
-	case rsiSignal == "moderate buy" && (maSignal == "strong sell" || maSignal == "moderated  buy"):
-		fmt.Println("moderate buy")
+
+	case rsiSignal == "strong buy" && maSignal == "moderate buy":
+
 		return "moderate buy"
-	case (rsiSignal == "neutral" && maSignal == "strong buy") || (rsiSignal == "strong buy" && maSignal == "neutral"):
-		fmt.Println("moderate buy")
+
+		// for moderate buy
+
+	case rsiSignal == "moderate buy" && maSignal == "moderate buy":
+
 		return "moderate buy"
-	case (rsiSignal == "neutral" && maSignal == "strong sell") || (rsiSignal == "strong sell" && maSignal == "neutral"):
-		fmt.Println("moderate sell")
+	case rsiSignal == "moderate buy" && maSignal == "strong sell":
+
 		return "moderate sell"
+	case rsiSignal == "moderate buy" && maSignal == "strong buy":
+
+		return "moderate buy"
+
 	default:
 		fmt.Println("wait")
 		return "wait"
@@ -96,31 +95,26 @@ func BetterSignal() string {
 
 }
 
-// func MainSignal() float64 {
+func MainSignal() float64 {
 
-// 	if betterSignal() == "sell" {
-// 		fmt.Println("sell")
-// 		return float64(-1)
-// 	} else if betterSignal() == "buy" {
-// 		fmt.Println("buy")
-// 		return float64(1)
-// 	} else if betterSignal() == "wait" {
-// 		fmt.Println("wait")
-// 		return float64(0)
-// 	} else if betterSignal() == "moderate sell" {
-// 		fmt.Println("moderate sell")
-// 		return float64(-0.5)
-// 	} else if betterSignal() == "moderate buy" {
-// 		fmt.Println("moderate buy")
-// 		return float64(0.5)
-// 	} else {
-// 		return float64(0)
-// 	}
-// }
+	if BetterSignal() == "sell" {
+		return float64(-1)
+	} else if BetterSignal() == "buy" {
+		return float64(1)
+	} else if BetterSignal() == "wait" {
+		return float64(0)
+	} else if BetterSignal() == "moderate sell" {
+		return float64(-0.5)
+	} else if BetterSignal() == "moderate buy" {
+		return float64(0.5)
+	} else {
+		return 0
+	}
+}
 
-// func SignalWithMemberShipDegree() {
+func SignalWithMemberShipDegree() {
 
-// 	sigFirst := mu.MembershipDegreeShort() * MainSignal()
-// 	sigSecond := mu.MembershipDegreeLong() * MainSignal()
-// 	fmt.Println("Signal for short: ", sigFirst, " Signal for long: ", sigSecond)
-// }
+	sigFirst := mu.MembershipDegreeShort() * MainSignal()
+	sigSecond := mu.MembershipDegreeLong() * MainSignal()
+	fmt.Println("Signal for short: ", sigFirst, " Signal for long: ", sigSecond)
+}
