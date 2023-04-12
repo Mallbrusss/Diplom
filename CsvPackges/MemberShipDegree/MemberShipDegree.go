@@ -7,31 +7,35 @@ import (
 )
 
 const (
-	lowerBound  = 15
-	centerPoint = 30
-	upperBound  = 45
+	lowerBound  = 15.0
+	centerPoint = 30.0
+	upperBound  = 45.0
 )
 
 func calculateMembershipDegree(maValue float64) float64 {
-	if maValue <= lowerBound || maValue >= upperBound {
+	if maValue < lowerBound || maValue > upperBound {
 		return 0.0
-	} else if maValue >= centerPoint && maValue < upperBound {
-		return (upperBound - maValue) / (upperBound - centerPoint)
-	} else {
-		return (maValue - lowerBound) / (centerPoint - lowerBound)
 	}
+
+	if maValue == centerPoint {
+		return 1.0
+	}
+
+	if maValue > centerPoint {
+		return (upperBound - maValue) / (upperBound - centerPoint)
+	}
+
+	return (maValue - lowerBound) / (centerPoint - lowerBound)
 }
 
 func MembershipDegreeShort() float64 {
-	fastMA := ma.ShortMovingAverage()
-	mu := calculateMembershipDegree(fastMA)
+	mu := calculateMembershipDegree(ma.ShortMovingAverage())
 	// fmt.Println("Membership degree short: ", mu)
 	return mu
 }
 
 func MembershipDegreeLong() float64 {
-	longMA := ma.LongMovingAverage()
-	mu := calculateMembershipDegree(longMA)
+	mu := calculateMembershipDegree(ma.LongMovingAverage())
 	// fmt.Println("Membership degree long: ", mu)
 	return mu
 }

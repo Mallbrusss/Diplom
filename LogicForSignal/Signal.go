@@ -7,107 +7,95 @@ import (
 	rsi "programm/RsiModel"
 )
 
-
 func BetterSignal() string {
 	rsiValue := rsi.RsiMain()          // assume this function returns the current RSI value
 	shortMA := ma.ShortMovingAverage() // assume this function returns the current short-term moving average
 	longMA := ma.LongMovingAverage()   // assume this function returns the current long-term moving average
 
-	rsiSignal := ""
+	trendDirection := ""
 	if rsiValue >= 70 {
-		rsiSignal = "strong sell"
+		trendDirection = "strong down"
 	} else if rsiValue >= 55 && rsiValue < 70 {
-		rsiSignal = "moderate sell"
+		trendDirection = "moderate down"
 	} else if rsiValue >= 45 && rsiValue < 55 {
-		rsiSignal = "neutral"
+		trendDirection = "neutral"
 	} else if rsiValue >= 30 && rsiValue < 45 {
-		rsiSignal = "moderate buy"
+		trendDirection = "moderate up"
 	} else {
-		rsiSignal = "strong buy"
+		trendDirection = "strong up"
 	}
-
+	
 	maSignal := ""
 	diff := shortMA - longMA
 	if diff >= 3 {
-		maSignal = "strong buy"
+		maSignal = "strong up"
 	} else if diff > 0 && diff < 3 {
-		maSignal = "moderate buy"
+		maSignal = "moderate up"
 	} else if diff > -3 && diff < 0 {
-		maSignal = "moderate sell"
+		maSignal = "moderate down"
 	} else {
-		maSignal = "strong sell"
+		maSignal = "strong down"
 	}
 
 	switch {
-	// for strong sell
+	case trendDirection == "strong down":
+		switch maSignal {
+		case "strong down":
+			return "strong down"
+		case "moderate down", "moderate up":
+			return "moderate down"
+		default:
+			return "neutral"
+		}
 
-	case rsiSignal == "strong sell" && maSignal == "strong sell":
+	case trendDirection == "moderate down":
+		switch maSignal {
+		case "strong up", "moderate up":
+			return "moderate up"
+		case "moderate down", "strong down":
+			return "moderate down"
+		default:
+			return "neutral"
+		}
 
-		return "sell"
+	case trendDirection == "strong up":
+		switch maSignal {
+		case "strong up":
+			return "strong up"
+		case "moderate down", "moderate up":
+			return "moderate up"
+		default:
+			return "neutral"
+		}
 
-	case rsiSignal == "strong sell" && maSignal == "moderate sell":
-
-		return "moderate sell"
-
-	case rsiSignal == "strong sell" && maSignal == "moderate buy":
-
-		return "moderate sell"
-
-		// for moderate sell
-	case rsiSignal == "moderate sell" && (maSignal == "strong buy" || maSignal == "moderated buy"):
-
-		return "moderate buy"
-
-	case rsiSignal == "moderate sell" && (maSignal == "moderate sell" || maSignal == "strong sell"):
-
-		return "moderate sell"
-
-		// for strong buy
-
-	case rsiSignal == "strong buy" && maSignal == "strong buy":
-
-		return "buy"
-
-	case rsiSignal == "strong buy" && maSignal == "moderate sell":
-
-		return "moderate buy"
-
-	case rsiSignal == "strong buy" && maSignal == "moderate buy":
-
-		return "moderate buy"
-
-		// for moderate buy
-
-	case rsiSignal == "moderate buy" && maSignal == "moderate buy":
-
-		return "moderate buy"
-	case rsiSignal == "moderate buy" && maSignal == "strong sell":
-
-		return "moderate sell"
-	case rsiSignal == "moderate buy" && maSignal == "strong buy":
-
-		return "moderate buy"
+	case trendDirection == "moderate up":
+		switch maSignal {
+		case "strong up", "moderate up":
+			return "moderate up"
+		case "strong down":
+			return "moderate down"
+		default:
+			return "neutral"
+		}
 
 	default:
-		fmt.Println("wait")
-		return "wait"
+		return "neutral"
 	}
-
 }
 
 func MainSignal() float64 {
-
-	if BetterSignal() == "sell" {
-		return float64(-1)
-	} else if BetterSignal() == "buy" {
-		return float64(1)
-	} else if BetterSignal() == "wait" {
-		return float64(0)
-	} else if BetterSignal() == "moderate sell" {
-		return float64(-0.5)
-	} else if BetterSignal() == "moderate buy" {
-		return float64(0.5)
-	} else {
+	switch BetterSignal() {
+	case "strong down":
+		return -1
+	case "moderate down":
+		return -0.5
+	case "neutral":
+		return 0
+	case "moderate up":
+		return 0.5
+	case "strong up":
+		return 1
+	default:
 		return 0
 	}
 }
