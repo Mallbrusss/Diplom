@@ -25,7 +25,7 @@ func ShortMovingAverage() float64 {
 
 func LongMovingAverage() float64 {
 	// Extract the last ten closing prices from the slice
-	firstTwenty := prs.ParseCSVSecond()[:20]
+	firstTwenty := prs.ParseCSVFirst()[:20]
 
 	for i := 0; i < 20; i++ {
 		firstTwenty[i] = firstTwenty[len(firstTwenty)-i-1]

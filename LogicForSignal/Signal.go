@@ -8,9 +8,9 @@ import (
 )
 
 func BetterSignal() string {
-	rsiValue := rsi.RsiMain()          // assume this function returns the current RSI value
-	shortMA := ma.ShortMovingAverage() // assume this function returns the current short-term moving average
-	longMA := ma.LongMovingAverage()   // assume this function returns the current long-term moving average
+	rsiValue := rsi.RsiMain()          
+	shortMA := ma.ShortMovingAverage() 
+	longMA := ma.LongMovingAverage()   
 
 	trendDirection := ""
 	if rsiValue >= 70 {
@@ -50,7 +50,7 @@ func BetterSignal() string {
 
 	case trendDirection == "moderate down":
 		switch maSignal {
-		case "strong up", "moderate up":
+		case "strong up":
 			return "moderate up"
 		case "moderate down", "strong down":
 			return "moderate down"
@@ -89,8 +89,6 @@ func MainSignal() float64 {
 		return -1
 	case "moderate down":
 		return -0.5
-	case "neutral":
-		return 0
 	case "moderate up":
 		return 0.5
 	case "strong up":
@@ -104,5 +102,29 @@ func SignalWithMemberShipDegree() {
 
 	sigFirst := mu.MembershipDegreeShort() * MainSignal()
 	sigSecond := mu.MembershipDegreeLong() * MainSignal()
-	fmt.Println("Signal for short: ", sigFirst, " Signal for long: ", sigSecond)
+	fmt.Println("trend line: ", MainSignal(), "\n Signal for short: ", sigFirst, "\n Signal for long: ", sigSecond)
+}
+
+func SignalWithMemberShipDegreeShort()float64{
+	sig:=mu.MembershipDegreeShort()*MainSignal()
+	return sig
+}
+func SignalWithMemberShipDegreeLong()float64{
+	sig:=mu.MembershipDegreeLong()*MainSignal()
+	return sig
+}
+
+func SignalForBuyOrSail() string{
+	switch BetterSignal() {
+	case "strong down":
+		return "buy" 
+	case "moderate down":
+		return "moderate sell" 
+	case "moderate up":
+		return "moderate buy" 
+	case "strong up":
+		return "sell" 
+	default:
+		return "wait" 
+	}
 }
