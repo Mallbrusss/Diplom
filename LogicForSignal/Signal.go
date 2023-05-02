@@ -7,7 +7,7 @@ import (
 	rsi "programm/RsiModel"
 )
 
-func BetterSignal() string {
+func Signal() string {
 	rsiValue := rsi.RsiMain()          
 	shortMA := ma.ShortMovingAverage() 
 	longMA := ma.LongMovingAverage()   
@@ -84,7 +84,7 @@ func BetterSignal() string {
 }
 
 func MainSignal() float64 {
-	switch BetterSignal() {
+	switch Signal() {
 	case "strong down":
 		return -1
 	case "moderate down":
@@ -115,7 +115,7 @@ func SignalWithMemberShipDegreeLong()float64{
 }
 
 func SignalForBuyOrSail() string{
-	switch BetterSignal() {
+	switch Signal() {
 	case "strong down":
 		return "buy" 
 	case "moderate down":

@@ -17,9 +17,9 @@ func LogicForCoast() {
 	fmt.Scan(&initialCapital)
 	fmt.Println("========================================================================")
 
-	sharePrice := prs.ParseCSVEndClose()
+	sharePrice := prs.ParseCSVEndClose() // Исправить, нет обновления цены, сделать апдейт !!!!!
 	sharesOwned := 0.0
-	costBasis := 0.0
+
 	balance := initialCapital
 	fmt.Printf("Initial balance: %.2f\n", balance)
 
@@ -33,19 +33,20 @@ func LogicForCoast() {
 			degreeOfConfidence := sig.SignalWithMemberShipDegreeShort()
 			numShares := math.Ceil(balance / sharePrice * math.Abs(degreeOfConfidence))
 	
-			purchaseAmount := sharePrice * numShares *  math.Abs(degreeOfConfidence)
+			purchaseAmount := sharePrice * numShares
 			if purchaseAmount > balance {
 				fmt.Printf("Not enough money to make the purchase. Remaining balance: %.2f\n", balance)
 				fmt.Println("========================================================================")
 				continue
 			}
 			balance -= purchaseAmount
-			costBasis += purchaseAmount
+
 			sharesOwned += numShares
 			fmt.Printf("Purchased %.2f shares for %.2f. New balance: %.2f\n", numShares, purchaseAmount, balance)
 	
 			fmt.Printf("You now own %.2f shares.\n", sharesOwned)
 			fmt.Println("========================================================================")
+			fmt.Println(sharePrice)
 	
 
 		case "sell":
@@ -63,7 +64,7 @@ func LogicForCoast() {
 				continue
 			}
 			
-			saleAmount := sharePrice  * numShares * math.Abs(degreeOfConfidence)
+			saleAmount := sharePrice  * numShares
 			fmt.Printf("Recommended number of shares to sell: %.2f\n", numShares)
 			fmt.Printf("Estimated sale amount: %.2f\n", saleAmount)
 			fmt.Println("========================================================================")
@@ -122,7 +123,8 @@ func LogicForCoast() {
 			break
 		}
 
-		time.Sleep( time.Second)
+		time.Sleep(15 * time.Second)
+		sharePrice = prs.ParseCSVEndClose()
 		sig.SignalWithMemberShipDegree()
 		fmt.Println(sig.SignalForBuyOrSail())
 

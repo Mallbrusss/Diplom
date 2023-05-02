@@ -41,7 +41,6 @@ func rsi(prices []float64, period int) float64 {
 	} else {
 		rsi = 100 - (100 / (1 + rs))
 	}
-	// fmt.Println("rsi is: ", rsi)
 	return rsi
 }
 

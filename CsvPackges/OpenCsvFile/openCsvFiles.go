@@ -7,7 +7,7 @@ import (
 
 func OpenCsvFile() *os.File {
 	// Open the CSV file
-	file, err := os.Open("/home/mallbruss/university/programm/data/testData/Download Data - STOCK_US_XNYS_CSV.csv")
+	file, err := os.Open("/home/mallbruss/university/programm/data/testData/Brent.csv")
 	che.CheckError(err)
 	return file
 }

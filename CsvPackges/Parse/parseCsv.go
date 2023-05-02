@@ -52,7 +52,7 @@ func ParseCSVEndClose() float64 {
 	if err != nil {
 		return 0.0
 	}
-
+	
 	return closePrice
 }
 
