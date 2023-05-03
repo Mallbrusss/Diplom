@@ -17,7 +17,7 @@ func LogicForCoast() {
 	fmt.Scan(&initialCapital)
 	fmt.Println("========================================================================")
 
-	sharePrice := prs.ParseCSVEndClose() // Исправить, нет обновления цены, сделать апдейт !!!!!
+	sharePrice := prs.ParseCSVEndClose()
 	sharesOwned := 0.0
 
 	balance := initialCapital
