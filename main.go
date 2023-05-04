@@ -1,9 +1,12 @@
 package main
 
 import (
-	vol "programm/VolumeCalculate"
+	// vol "programm/VolumeCalculate"
+	tel "programm/Telegram/MainTelegram"
 )
 
 func main() {
-	vol.LogicForCoast()
+	// vol.LogicForCoast()
+
+	tel.Telegram()
 }

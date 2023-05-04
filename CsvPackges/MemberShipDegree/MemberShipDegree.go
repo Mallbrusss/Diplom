@@ -6,7 +6,7 @@ import (
 
 const (
 	lowerBound  = 60.0
-	centerPoint = 75.0    //автоматизировать.
+	centerPoint = 75.0    
 	upperBound  = 90.0
 )
 
