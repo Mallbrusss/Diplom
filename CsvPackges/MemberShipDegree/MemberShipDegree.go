@@ -7,9 +7,9 @@ import (
 )
 
 const (
-	lowerBound  = 60.0
-	centerPoint = 75.0
-	upperBound  = 90.0
+	lowerBound  = 650
+	centerPoint = 850
+	upperBound  = 1000
 )
 
 func calculateMembershipDegree(maValue float64) float64 {
@@ -30,13 +30,11 @@ func calculateMembershipDegree(maValue float64) float64 {
 
 func MembershipDegreeShort() float64 {
 	mu := calculateMembershipDegree(ma.ShortMovingAverage())
-	// fmt.Println("Membership degree short: ", mu)
 	return mu
 }
 
 func MembershipDegreeLong() float64 {
 	mu := calculateMembershipDegree(ma.LongMovingAverage())
-	// fmt.Println("Membership degree long: ", mu)
 	return mu
 }
 

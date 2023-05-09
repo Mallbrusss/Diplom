@@ -5,36 +5,31 @@ import (
 )
 
 func ShortMovingAverage() float64 {
-	// Extract the last ten closing prices from the slice
-	firstTen := prs.ParseCSVFirst()[:20]
-
-	for i := 0; i < 10; i++ {
-		firstTen[i] = firstTen[len(firstTen)-i-1]
-	}
-
-	// Calculate the moving average of the last ten closing prices
-	var sum float64
-	for _, price := range firstTen {
-		sum += price
-	}
-	movingAvg := sum / float64(len(firstTen))
-	return movingAvg
-}
-
-func LongMovingAverage() float64 {
-	// Extract the last ten closing prices from the slice
-	firstTwenty := prs.ParseCSVFirst()[:50]
+	firstTwenty := prs.ParseCSVFirst()[:20]
 
 	for i := 0; i < 20; i++ {
 		firstTwenty[i] = firstTwenty[len(firstTwenty)-i-1]
 	}
-
-	// Calculate the moving average of the last ten closing prices
 	var sum float64
+
 	for _, price := range firstTwenty {
 		sum += price
 	}
 	movingAvg := sum / float64(len(firstTwenty))
-	// fmt.Println("Moving average Second:", movingAvg)
+	return movingAvg
+}
+
+func LongMovingAverage() float64 {
+	firstFifty := prs.ParseCSVFirst()[:50]
+
+	for i := 0; i < 50; i++ {
+		firstFifty[i] = firstFifty[len(firstFifty)-i-1]
+	}
+
+	var sum float64
+	for _, price := range firstFifty {
+		sum += price
+	}
+	movingAvg := sum / float64(len(firstFifty))
 	return movingAvg
 }
