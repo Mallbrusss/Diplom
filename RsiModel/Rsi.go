@@ -1,7 +1,7 @@
 package rsi
 
 import (
-	//"fmt"
+	"fmt"
 	"math"
 
 	prs "programm/CsvPackges/Parse"
@@ -56,4 +56,8 @@ func RsiMain() float64 {
 	prices := prs.ParseCSVFirst()
 	period := 10
 	return rsi(prices, period)
+}
+
+func ShowRsi(){
+	fmt.Println("Rsi is ", RsiMain())
 }

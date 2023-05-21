@@ -2,10 +2,7 @@ package openCsv
 
 import (
 	"encoding/csv"
-	"fmt"
-	"os"
 	"strconv"
-	"time"
 
 	opf "programm/CsvPackges/OpenCsvFile"
 )
@@ -53,27 +50,4 @@ func ParseCSVEndClose() float64 {
 	}
 
 	return closePrice
-}
-
-func WatchFile(filename string) {
-	var prevModTime time.Time
-
-	for {
-		// Get information about the file
-		fileInfo, err := os.Stat(filename)
-		if err != nil {
-			fmt.Println("Error getting file info:", err)
-			continue
-		}
-
-		// Check if the modification time has changed
-		modTime := fileInfo.ModTime()
-		if !modTime.Equal(prevModTime) {
-			fmt.Println("File has changed!")
-			// Do something here, like parse the file
-		}
-
-		prevModTime = modTime
-		time.Sleep(time.Second) // Wait for a second before checking again
-	}
 }

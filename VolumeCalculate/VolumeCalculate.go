@@ -3,14 +3,15 @@ package volumecalculate
 import (
 	"fmt"
 	"math"
+	"time"
+
 	prs "programm/CsvPackges/Parse"
 	sig "programm/LogicForSignal"
-	"time"
+	ma "programm/Ma/MaFirst"
+	rsi "programm/RsiModel"
 )
 
 func LogicForCoast() {
-	sig.SignalWithMemberShipDegree()
-	fmt.Println(sig.SignalForBuyOrSail())
 
 	var initialCapital float64
 	fmt.Println("Enter the initial capital:")
@@ -30,7 +31,7 @@ func LogicForCoast() {
 
 		switch action {
 		case "buy":
-			degreeOfConfidence := sig.SignalWithMemberShipDegreeShort()
+			degreeOfConfidence := sig.SignalWithMemberShipDegreeLong()
 			numShares := math.Ceil(balance / sharePrice * math.Abs(degreeOfConfidence))
 	
 			purchaseAmount := sharePrice * numShares
@@ -46,8 +47,6 @@ func LogicForCoast() {
 	
 			fmt.Printf("You now own %.2f shares.\n", sharesOwned)
 			fmt.Println("========================================================================")
-			fmt.Println(sharePrice)
-	
 
 		case "sell":
 			if sharesOwned < 1 {
@@ -125,8 +124,11 @@ func LogicForCoast() {
 
 		time.Sleep(15 * time.Second)
 		sharePrice = prs.ParseCSVEndClose()
+		ma.ShowMA()
+		rsi.ShowRsi()
 		sig.SignalWithMemberShipDegree()
 		fmt.Println(sig.SignalForBuyOrSail())
+		
 
 	}
 	fmt.Println("Simulation ended.")

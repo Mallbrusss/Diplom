@@ -1,6 +1,7 @@
 package maFirst
 
 import (
+	"fmt"
 	prs "programm/CsvPackges/Parse"
 )
 
@@ -32,4 +33,10 @@ func LongMovingAverage() float64 {
 	}
 	movingAvg := sum / float64(len(firstFifty))
 	return movingAvg
+}
+
+func ShowMA(){
+	fmt.Println("Short MA ",ShortMovingAverage())
+	fmt.Println("Long MA ",LongMovingAverage())
+
 }

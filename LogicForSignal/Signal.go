@@ -119,9 +119,9 @@ func SignalForBuyOrSail() string{
 	case "strong down":
 		return "buy" 
 	case "moderate down":
-		return "moderate sell" 
-	case "moderate up":
 		return "moderate buy" 
+	case "moderate up":
+		return "moderate sell" 
 	case "strong up":
 		return "sell" 
 	default:
