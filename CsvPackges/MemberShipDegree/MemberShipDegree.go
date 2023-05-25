@@ -8,18 +8,18 @@ import (
 	"sort"
 )
 
-var (
-	lowerBound  = CalculateSupport()
-	centerPoint = CalculateMedianPrice()
-	upperBound  = CalculateResistance()
-)
-
-// const (
-// 	lowerBound = 750
-// 	centerPoint =800
-// 	upperBound = 950
-
+// var (
+// 	lowerBound  = CalculateSupport()
+// 	centerPoint = CalculateMedianPrice()
+// 	upperBound  = CalculateResistance()
 // )
+
+const (
+	lowerBound = 15000
+	centerPoint = 17000
+	upperBound = 20000
+
+)
 func calculateMembershipDegree(maValue float64) float64 {
 
 	if maValue < lowerBound || maValue > upperBound {
